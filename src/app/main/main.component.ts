@@ -40,6 +40,7 @@ export class MainComponent implements OnInit{
     public analysisText: string;
     public fullReport: string;
     public metadata: string[];
+    public antiAiReport: string;
     
     
     
@@ -106,8 +107,10 @@ export class MainComponent implements OnInit{
     async showFullReport() {
         if (!this.analysisText) return;
     
+        this.antiAiReport = this.promptAnalyzer.generateAntiAiReport(this.analysisText);
         this.metadata = await this.pdfReader.extractRawMetadata(this.selectedFile);
-        this.fullReport = this.reportService.generateReport(this.analysisText, this.metadata);
+        
+        this.fullReport = this.reportService.generateReport(this.analysisText, this.metadata, this.antiAiReport);
     }
 
 }

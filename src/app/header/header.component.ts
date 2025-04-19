@@ -9,4 +9,6 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+  public title: string = 'NO AI CV';
+  
 }

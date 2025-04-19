@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class PdfReportService {
-    generateReport(text: string, metadata: string[] = []): string {
+    generateReport(text: string, metadata: string[] = [], antiAi: string = ''): string {
         const stats = this.getTextStats(text);
         const typeInfo = this.getDocumentTypeInfo(text);
         
@@ -21,7 +21,9 @@ export class PdfReportService {
             '',
             'Top 5 najczęściej występujących słów:',
             ...stats.topWords.map(([word, count]) => `  • ${word}: ${count}x`),
-            ''
+            '',
+            '',
+            antiAi
         ].join('\n');
     }
     

@@ -1,6 +1,8 @@
 <div class="main-wrapper mat-elevation-z2">
     <mat-card appearance="outlined" class="d-flex flex-column file-upload">
-        <mat-card-title class="p-2">Dodaj plik, aby wykonać analizę anty-AI:</mat-card-title>
+        <mat-card-title class="p-2">
+            {{ analysisResult ? 'Analiza anty-AI' : 'Dodaj plik, aby wykonać analizę anty-AI:' }}
+        </mat-card-title>
         <mat-card-content class="justify-content-around">
             
             <input
