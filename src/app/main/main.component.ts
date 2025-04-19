@@ -45,4 +45,8 @@ export class MainComponent {
         this.fileName = '';
         this.uploadProgress = 0;
     }
+    
+    analyzeFile() {
+        console.log('analyzing the file...');
+    }
 }

@@ -1,46 +1,52 @@
 <div class="main-wrapper mat-elevation-z2">
-    <mat-card class="d-flex flex-column" appearance="outlined">
-        <mat-card-title class="p-2">Analiza PDF</mat-card-title>
+    <mat-card appearance="outlined" class="d-flex flex-column file-upload">
+        <mat-card-title class="p-2">Dodaj plik, aby wykonać analizę anty-AI:</mat-card-title>
         <mat-card-content class="justify-content-around">
             
             <input
-                    type="file"
-                    hidden
-                    [accept]="requiredFileType"
-                    (change)="onFileSelected($event)"
                     #fileUpload
+                    (change)="onFileSelected($event)"
+                    [accept]="requiredFileType"
+                    hidden
+                    type="file"
             />
             
             <div class="d-flex align-items-center justify-content-between my-3">
                 <span>{{ fileName || 'Nie wybrano pliku.' }}</span>
                 
                 <button
-                        mat-mini-fab
-                        color="primary"
-                        matTooltip="Wybierz plik PDF"
                         (click)="fileUpload.click()"
+                        color="primary"
+                        mat-mini-fab
+                        matTooltip="Wybierz plik PDF"
                 >
                     <mat-icon>attach_file</mat-icon>
                 </button>
             </div>
-            
-            <mat-progress-bar
-                    mode="determinate"
-                    *ngIf="uploadProgress"
-                    [value]="uploadProgress"
-                    class="mb-3"
-            ></mat-progress-bar>
-            
-            <button
-                    mat-mini-fab
-                    color="warn"
-                    *ngIf="uploadProgress"
-                    matTooltip="Anuluj"
-                    (click)="cancelUpload()"
-            >
-                <mat-icon>delete_forever</mat-icon>
-            </button>
-        
+            <div class="d-flex flex-row justify-content-between">
+                <mat-progress-bar
+                        *ngIf="uploadProgress"
+                        [value]="uploadProgress"
+                        class="my-progress-bar"
+                        mode="determinate"
+                ></mat-progress-bar>
+                
+                <button
+                        (click)="cancelUpload()"
+                        *ngIf="uploadProgress"
+                        color="warn"
+                        mat-mini-fab
+                        matTooltip="Anuluj"
+                >
+                    <mat-icon>delete_forever</mat-icon>
+                </button>
+            </div>
+            <div class="text-center mt-3">
+                <button class="rounded-fab" mat-fab extended color="primary" (click)="analyzeFile()" [disabled]="!fileName">
+                    <mat-icon class="me-2">search</mat-icon>
+                    Wykonaj analizę
+                </button>
+            </div>
         </mat-card-content>
     </mat-card>
 </div>
