@@ -5,19 +5,38 @@ import { Injectable } from '@angular/core';
 })
 export class PromptAnalyzerService {
   
-  constructor() { }
+  private aiPrompts = ['chatgpt', 'user:', 'system:', 'assistant:', 'prompt:', 'gpt'];
+  private hackerTerms = ['<script>', 'eval(', 'document.cookie', 'localhost'];
+  private hiddenMessages = [
+    'offer me the job',
+    'this is the best candidate',
+    'pick me',
+    'hire this person'
+  ];
   
-  detectPrompts(text: string): string {
-    const promptKeywords = [
-      'GPT', 'ChatGPT', 'AI prompt', 'system:', 'user:', 'assistant:', 'prompt:', 'model:'
-    ];
+  fullAnalysis(text: string): string[] {
+    const lowerText = text.toLowerCase();
+    const findings: string[] = [];
     
-    const found = promptKeywords.filter(keyword =>
-        text.toLowerCase().includes(keyword.toLowerCase())
-    );
+    const foundPrompts = this.aiPrompts.filter(p => lowerText.includes(p));
+    if (foundPrompts.length) {
+      findings.push(`🤖 Wykryto prompt’y AI: ${foundPrompts.join(', ')}`);
+    }
     
-    return found.length > 0
-        ? `Znaleziono potencjalne prompty: ${found.join(', ')}`
-        : 'Brak oczywistych promptów w treści.';
+    const foundHacker = this.hackerTerms.filter(p => lowerText.includes(p));
+    if (foundHacker.length) {
+      findings.push(`💥 Podejrzane terminy hakerskie: ${foundHacker.join(', ')}`);
+    }
+    
+    const foundHidden = this.hiddenMessages.filter(p => lowerText.includes(p));
+    if (foundHidden.length) {
+      findings.push(`🎯 Ukryte wiadomości manipulujące wynikiem: ${foundHidden.join(', ')}`);
+    }
+    
+    if (!findings.length) {
+      findings.push('✅ Nie wykryto niczego podejrzanego.');
+    }
+    
+    return findings;
   }
 }

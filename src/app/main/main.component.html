@@ -4,17 +4,18 @@
         <mat-card-content class="justify-content-around">
             
             <input
-                    #fileUpload
-                    (change)="onFileSelected($event)"
-                    [accept]="requiredFileType"
-                    hidden
-                    type="file"
+                #fileUpload
+                (change)="onFileSelected($event)"
+                [accept]="requiredFileType"
+                hidden
+                type="file"
             />
             
             <div class="d-flex align-items-center justify-content-between my-3">
-                <span>{{ fileName || 'Nie wybrano pliku.' }}</span>
+                <span>{{ fileName || 'Wybierz plik do analizy.' }}</span>
                 
                 <button
+                        *ngIf="canSelectNewFile"
                         (click)="fileUpload.click()"
                         color="primary"
                         mat-mini-fab
@@ -22,30 +23,38 @@
                 >
                     <mat-icon>attach_file</mat-icon>
                 </button>
-            </div>
-            <div class="d-flex flex-row justify-content-between">
-                <mat-progress-bar
-                        *ngIf="uploadProgress"
-                        [value]="uploadProgress"
-                        class="my-progress-bar"
-                        mode="determinate"
-                ></mat-progress-bar>
-                
                 <button
                         (click)="cancelUpload()"
-                        *ngIf="uploadProgress"
+                        *ngIf="!canSelectNewFile"
                         color="warn"
                         mat-mini-fab
                         matTooltip="Anuluj"
                 >
                     <mat-icon>delete_forever</mat-icon>
                 </button>
+
             </div>
-            <div class="text-center mt-3">
-                <button class="rounded-fab" mat-fab extended color="primary" (click)="analyzeFile()" [disabled]="!fileName">
-                    <mat-icon class="me-2">search</mat-icon>
-                    Wykonaj analizę
-                </button>
+            <div class="d-flex flex-column" *ngIf="(!analysisResult || analysisResult === '') && !canSelectNewFile">
+                <div class="d-flex flex-row justify-content-between">
+                    <mat-progress-bar
+                            *ngIf="uploadProgress > 0"
+                            [value]="uploadProgress"
+                            class="my-progress-bar"
+                            mode="determinate"
+                    ></mat-progress-bar>
+                    
+                </div>
+                <div *ngIf="uploadProgress === 0" class="text-center mt-3">
+                    <button (click)="analyzeFile()" [disabled]="!fileName" class="rounded-fab" color="primary" extended
+                            mat-fab>
+                        <mat-icon class="me-2">search</mat-icon>
+                        Wykonaj analizę
+                    </button>
+                </div>
+            </div>
+            
+            <div class="d-flex justify-content-start" *ngIf="analysisResult && analysisResult !== '' && canSelectNewFile">
+                {{analysisResult}}
             </div>
         </mat-card-content>
     </mat-card>
