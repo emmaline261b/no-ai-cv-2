@@ -1,3 +1,4 @@
+
 .main {
     height: 60vh;
     position: relative;
@@ -12,3 +13,31 @@
     padding: 2rem;
     text-align: center;
 }
+
+mat-card {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border-radius: 8px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.my-3 {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
