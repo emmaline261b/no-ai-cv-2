@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {RouterLinkWithHref, RouterOutlet} from '@angular/router';
 import {PrimeNG} from 'primeng/config';
 import {CommonModule} from '@angular/common';
 import {FooterComponent} from './footer/footer.component';

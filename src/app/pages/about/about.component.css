@@ -1,29 +1,30 @@
 
-.main-wrapper {
+.about-wrapper {
     position: relative;
     align-items: center;
     justify-content: space-around;
+    justify-self: center;
     max-width: 600px;
-    margin: 3rem auto;
     padding: 2rem;
     text-align: center;
     border-radius: 1rem;
 }
 
-.file-upload {
+.card-main {
     background-color: #ffffff !important;
     color: #000000 !important;
 }
 
-.file-upload-inner {
+.card-main-inner {
     padding: 1rem;
+    margin-bottom: 1rem;
     border-radius: 1rem;
-    font-size: clamp(14px, 2vw, 18px);
+    font-size: clamp(14px, 2vw, 20px);
     font-weight: lighter;
-    background-color: #eeeeee !important;
     color: #000000 !important;
 }
 
-.my-progress-bar {
-    margin: 16px 16px 16px 0;
+.card-content {
+    font-width: lighter;
+    font-size: clamp(13px, 2vw, 16px);
 }
