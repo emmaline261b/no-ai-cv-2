@@ -56,6 +56,25 @@
             <div class="d-flex justify-content-start" *ngIf="analysisResult && analysisResult !== '' && canSelectNewFile">
                 {{analysisResult}}
             </div>
+            <div *ngIf="analysisResult && analysisResult !== ''" class="d-flex flex-row justify-content-around mt-3">
+                <button (click)="setDefaultValues()" [disabled]="!fileName" class="rounded-mini-fab m-3" color="primary" extended
+                        mat-fab>
+                    <mat-icon class="me-2">search</mat-icon>
+                    Wykonaj kolejną analizę
+                </button>
+                <button (click)="showFullReport()" [disabled]="!fileName" class="rounded-mini-fab m-3" color="secondary" extended
+                        mat-fab>
+                    <mat-icon class="me-2">search</mat-icon>
+                    Wyświetl pełen raport
+                </button>
+            </div>
+
+        </mat-card-content>
+    </mat-card>
+    <mat-card *ngIf="fullReport" appearance="outlined" class="d-flex flex-column file-upload mt-4">
+        <mat-card-title>Pełen raport</mat-card-title>
+        <mat-card-content>
+            <pre style="white-space: pre-wrap">{{ fullReport }}</pre>
         </mat-card-content>
     </mat-card>
 </div>

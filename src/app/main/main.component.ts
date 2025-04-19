@@ -7,7 +7,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCardModule } from '@angular/material/card';
 import { PromptAnalyzerService } from '../services/prompt-analyzer.service';
 import {PdfReaderService} from '../services/pdf-reader.service';
-import { interval, Subscription } from 'rxjs';
+import {PdfReportService} from '../services/pdf-report.service';
 
 
 
@@ -37,10 +37,15 @@ export class MainComponent implements OnInit{
     public uploadProgress;
     public selectedFile: File | null;
     public canSelectNewFile: boolean;
-
+    public analysisText: string;
+    public fullReport: string;
+    public metadata: string[];
+    
+    
     
     constructor(private promptAnalyzer: PromptAnalyzerService,
-                private pdfReader: PdfReaderService) {}
+                private pdfReader: PdfReaderService,
+                private reportService: PdfReportService) {}
     
     ngOnInit(): void {
         this.setDefaultValues();
@@ -53,6 +58,11 @@ export class MainComponent implements OnInit{
         this.uploadProgress = 0;
         this.selectedFile = null;
         this.canSelectNewFile = true;
+        this.analysisText = '';
+        this.fullReport = '';
+        this.metadata = [];
+    
+    
     
         if (this.fileInputRef) {
             this.fileInputRef.nativeElement.value = '';
@@ -83,6 +93,7 @@ export class MainComponent implements OnInit{
         setTimeout(() => {this.uploadProgress = 100}, 3000);
         
         const text = await this.pdfReader.extractTextFromFile(this.selectedFile);
+        this.analysisText = text;
         const results = this.promptAnalyzer.fullAnalysis(text);
     
         setTimeout(() => {
@@ -90,10 +101,13 @@ export class MainComponent implements OnInit{
             this.canSelectNewFile = true;
         }, 3500);
         
-        setTimeout(() => {
-            this.setDefaultValues();
-        }, 13500);
     }
     
+    async showFullReport() {
+        if (!this.analysisText) return;
     
+        this.metadata = await this.pdfReader.extractRawMetadata(this.selectedFile);
+        this.fullReport = this.reportService.generateReport(this.analysisText, this.metadata);
+    }
+
 }

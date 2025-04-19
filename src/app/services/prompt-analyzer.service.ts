@@ -25,12 +25,12 @@ export class PromptAnalyzerService {
     
     const foundHacker = this.hackerTerms.filter(p => lowerText.includes(p));
     if (foundHacker.length) {
-      findings.push(`💥 Podejrzane terminy hakerskie: ${foundHacker.join(', ')}`);
+      findings.push(`☠️ Podejrzane terminy hakerskie: ${foundHacker.join(', ')}`);
     }
     
     const foundHidden = this.hiddenMessages.filter(p => lowerText.includes(p));
     if (foundHidden.length) {
-      findings.push(`🎯 Ukryte wiadomości manipulujące wynikiem: ${foundHidden.join(', ')}`);
+      findings.push(`❌ Ukryte wiadomości manipulujące wynikiem: ${foundHidden.join(', ')}`);
     }
     
     if (!findings.length) {
